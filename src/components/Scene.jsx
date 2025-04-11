@@ -6,8 +6,13 @@ export default function Scene() {
   return (
     <Canvas
       style={{
-        height: "50%",
-        width: "100vw"
+        height: "100vh",
+        width: "100vw",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        zIndex: 0,
+
       }}
     >
         <Model />

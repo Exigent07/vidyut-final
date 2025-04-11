@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import HightechHelmet from "../../public/images/hightech-helmet.svg";
 import { MapPin } from 'lucide-react';
-import Scene from "./Scene";
 import { useEffect, useState } from "react";
 
 const stats = [
@@ -14,7 +12,7 @@ const stats = [
 ];
 
 const StatItem = ({ value, label }) => (
-  <div className="flex items-center gap-3 group transition-all hover:scale-105">
+  <div className="flex items-center gap-3 group transition-all hover:scale-105 pointer-events-auto">
     <span className="text-[32px] text-background group-hover:text-hover">
       {value}
     </span>
@@ -51,7 +49,7 @@ const Countdown = ({ targetDate }) => {
   return (
     <div className="flex gap-3">
       {Object.entries(timeLeft).map(([label, value]) => (
-        <div key={label} className="w-[70px] h-[50px] flex flex-col items-center justify-center border border-foreground text-foreground transition-all hover:scale-110 hover:border-hover">
+        <div key={label} className="w-[75px] h-[60px] flex flex-col items-center justify-center border border-foreground text-foreground transition-all hover:scale-110 hover:border-hover">
           <span className="text-xl font-semibold">{value}</span>
           <span className="text-xs uppercase">{label}</span>
         </div>
@@ -62,27 +60,29 @@ const Countdown = ({ targetDate }) => {
 
 export default function HeroSection() {
   return (
-    <section id="hero-section" className="relative flex items-center justify-center w-screen h-screen bg-background overflow-hidden">
+    <section id="hero-section" className="relative flex items-center justify-center w-screen h-screen z-10 overflow-hidden pointer-events-none">
       <div className="relative w-1/2 h-full flex flex-col items-center justify-center px-10">
-        <Scene />
+        <h1 className="text-9xl text-foreground tracking-[12px]">
+          VIDYUT
+        </h1>
 
         <div className="text-2xl tracking-[12px] text-foreground mt-6">
           NATIONAL LEVEL MULTIFEST
         </div>
-
-        <div className="flex items-center mt-8 gap-4">
-          <div className="h-[50px] px-4 py-2 bg-foreground flex items-center justify-center text-background font-bold text-sm tracking-widest cursor-pointer hover:bg-accent transition-all">
+        
+        <div className="h-[75px] px-4 py-2 mt-5 bg-foreground pointer-events-auto flex items-center justify-center text-background font-bold text-4xl tracking-widest cursor-pointer hover:bg-accent transition-all">
             COMING SOON
-          </div>
+        </div>
 
+        <div className="flex items-center mt-8 gap-4 pointer-events-auto">
           <Countdown targetDate={new Date(2025, 3, 25, 0, 0, 0)} />
+        </div>
 
-          <div className="flex items-center ml-6">
-            <MapPin className="w-5 h-5 text-foreground" />
-            <span className="text-foreground text-sm ml-2">
-              Amritapuri Campus, Kollam, Kerala
-            </span>
-          </div>
+        <div className="flex items-center mt-8 ml-6">
+          <MapPin className="w-5 h-5 text-foreground" />
+          <span className="text-foreground text-sm ml-2">
+            Amritapuri Campus, Kollam, Kerala
+          </span>
         </div>
       </div>
 
