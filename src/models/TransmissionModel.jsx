@@ -1,48 +1,75 @@
-import { useRef } from 'react'
-import { useGLTF, Text, MeshTransmissionMaterial, PresentationControls } from "@react-three/drei";
-import { useFrame, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
+import { useRef, useMemo } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { Text } from '@react-three/drei'
 
-export default function Model() {
-  const { nodes } = useGLTF("/models/twisted-torus.gltf");
-  const { viewport } = useThree()
-  const torus = useRef(null);
+export default function RippleText() {
+  const textRef = useRef()
 
-  useFrame(() => {
-    if (torus.current) torus.current.rotation.x += 0.02;
-  });
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0.01 },
+    uMouse: { value: new THREE.Vector2(0.3, 0.5) },
+    uRippleStrength: { value: 0.5 },
+    uRippleProgress: { value: 0.5 }
+  }), [])
+
+  useFrame(({ clock }) => {
+    uniforms.uTime.value = clock.getElapsedTime()
+
+    if (uniforms.uRippleProgress.value > 0.0) {
+      uniforms.uRippleProgress.value -= 0.005
+    } else {
+      uniforms.uRippleProgress.value = 0.0
+    }
+  })
+
+  const onPointerMove = (e) => {
+    uniforms.uMouse.value = e.uv
+    uniforms.uRippleProgress.value = 1.0
+  }
 
   return (
-    <group scale={viewport.width / 0.5}>
-      <Text
-        position={[0, 0, -1]}
-        font="/fonts/OpenSans.ttf"
-        fontSize={1}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        VIDYUT
-      </Text>
+    <Text
+      ref={textRef}
+      font="/fonts/OpenSans.ttf"
+      fontSize={3.5}
+      color="white"
+      onPointerMove={onPointerMove}
+      position={[0, 0, 0]}
+    >
+      VIDYUT
+      <shaderMaterial
+        attach="material"
+        uniforms={uniforms}
+        vertexShader={`
+          uniform float uTime;
+          uniform vec2 uMouse;
+          uniform float uRippleStrength;
+          uniform float uRippleProgress;
 
-      <PresentationControls
-        global
-        rotation={[0, 0.3, 0]}
-        polar={[-Math.PI / 4, Math.PI / 4]}
-        azimuth={[-Math.PI / 2, Math.PI / 2]}
-        config={{ mass: 1, tension: 170 }}
-        snap={true}
-      >
-        <mesh ref={torus} geometry={nodes.Torus_Knot.geometry}>
-          <MeshTransmissionMaterial
-            thickness={0.1}
-            roughness={0}
-            transmission={1}
-            ior={1.8}
-            chromaticAberration={0.5}
-            backside
-          />
-        </mesh>
-      </PresentationControls>
-    </group>
+          varying vec2 vUv;
+
+          void main() {
+            vUv = uv;
+            vec3 pos = position;
+
+            float dist = distance(uv, uMouse);
+
+            float ripple = sin(12.0 * dist - uTime * 2.5) * exp(-3.0 * dist);
+            ripple *= smoothstep(0.9, 0.0, dist);
+            pos.xy += normalize(uv - uMouse) * ripple * uRippleStrength * uRippleProgress;
+
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+          }
+        `}
+        fragmentShader={`
+          varying vec2 vUv;
+          void main() {
+            gl_FragColor = vec4(1.0);
+          }
+        `}
+        transparent
+      />
+    </Text>
   )
 }
