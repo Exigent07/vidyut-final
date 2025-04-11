@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import HightechHelmet from "../../public/images/hightech-helmet.svg";
 import { MapPin } from 'lucide-react';
 import Scene from "./Scene";
+import { useEffect, useState } from "react";
 
-const eventDates = ["25", "26", "27"];
 const stats = [
   { value: "20K", label: "Footfall" },
   { value: "15Lakhs", label: "Worth Prizes" },
@@ -11,23 +13,52 @@ const stats = [
   { value: "20+", label: "Workshops" },
 ];
 
-const DateBox = ({ day }) => (
-  <div className="w-[37px] h-[30px] cursor-pointer border border-foreground inline-flex items-center justify-center transition-all hover:scale-110 hover:border-[#DE6604]">
-    <span className="font-light text-foreground text-xl">{day}</span>
-  </div>
-);
-
 const StatItem = ({ value, label }) => (
   <div className="flex items-center gap-3 group transition-all hover:scale-105">
-    <span className="text-[32px] text-background group-hover:text-[#DE6604]">
+    <span className="text-[32px] text-background group-hover:text-hover">
       {value}
     </span>
-    <div className="w-px h-8 bg-[#DE6604]" />
-    <span className="text-base text-background group-hover:text-[#DE6604]">
+    <div className="w-px h-8 bg-hover" />
+    <span className="text-base text-background group-hover:text-hover">
       {label}
     </span>
   </div>
 );
+
+const Countdown = ({ targetDate }) => {
+  const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--", seconds: "--" });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: "00", hours: "00", minutes: "00", seconds: "00" });
+      } else {
+        const days = String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, "0");
+        const hours = String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+        const minutes = String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, "0");
+        const seconds = String(Math.floor((difference / 1000) % 60)).padStart(2, "0");
+        setTimeLeft({ days, hours, minutes, seconds });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return (
+    <div className="flex gap-3">
+      {Object.entries(timeLeft).map(([label, value]) => (
+        <div key={label} className="w-[70px] h-[50px] flex flex-col items-center justify-center border border-foreground text-foreground transition-all hover:scale-110 hover:border-hover">
+          <span className="text-xl font-semibold">{value}</span>
+          <span className="text-xs uppercase">{label}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default function HeroSection() {
   return (
@@ -35,22 +66,16 @@ export default function HeroSection() {
       <div className="relative w-1/2 h-full flex flex-col items-center justify-center px-10">
         <Scene />
 
-        <div
-          className="text-2xl tracking-[12px] text-foreground mt-6"
-        >
+        <div className="text-2xl tracking-[12px] text-foreground mt-6">
           NATIONAL LEVEL MULTIFEST
         </div>
 
         <div className="flex items-center mt-8 gap-4">
-          <div className="w-[63px] h-[30px] bg-foreground flex cursor-pointer items-center transition-all hover:bg-accent justify-center">
-            <span className="font-bold text-background text-2xl">MAR</span>
+          <div className="h-[50px] px-4 py-2 bg-foreground flex items-center justify-center text-background font-bold text-sm tracking-widest cursor-pointer hover:bg-accent transition-all">
+            COMING SOON
           </div>
 
-          <div className="flex gap-2">
-            {eventDates.map((day) => (
-              <DateBox key={day} day={day} />
-            ))}
-          </div>
+          <Countdown targetDate={new Date(2025, 3, 25, 0, 0, 0)} />
 
           <div className="flex items-center ml-6">
             <MapPin className="w-5 h-5 text-foreground" />
@@ -62,9 +87,7 @@ export default function HeroSection() {
       </div>
 
       <div className="absolute bottom-0 w-full h-[66px] bg-foreground">
-        <div
-          className="max-w-6xl mx-auto h-full flex justify-between items-center px-4 cursor-pointer"
-        >
+        <div className="max-w-6xl mx-auto h-full flex justify-between items-center px-4 cursor-pointer">
           {stats.map((stat, index) => (
             <StatItem key={index} value={stat.value} label={stat.label} />
           ))}
@@ -72,4 +95,4 @@ export default function HeroSection() {
       </div>
     </section>
   );
-};
+}

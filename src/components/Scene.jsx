@@ -7,7 +7,7 @@ export default function Scene() {
     <Canvas
       style={{
         height: "50%",
-        width: "50vw"
+        width: "100vw"
       }}
     >
         <Model />

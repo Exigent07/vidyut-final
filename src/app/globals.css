@@ -5,6 +5,7 @@
   --background: #0B0C11;
   --foreground: #ffffff;
   --accent: #C6D53F;
+  --hover: #DE6604;
   --font-sans: 'Open Sans', sans-serif;
   --font-mono: 'Courier New', monospace;
 }
@@ -12,6 +13,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-hover: var(--hover);
   --color-accent: var(--accent);
   --font-sans: var(--font-sans); 
   --font-mono: var(--font-mono); 
