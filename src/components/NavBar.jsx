@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import MenuButton from "./MenuButton";
 import Image from "next/image";
@@ -8,7 +8,9 @@ import logo from "../../public/images/logo.svg";
 
 export default function NavBar() {
   const logoRef = useRef(null);
+  const centerRef = useRef(null);
   const menuRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const logoEl = logoRef.current;
@@ -83,11 +85,47 @@ export default function NavBar() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth < 768) return;
+
+      const scrollY = window.scrollY;
+      if (scrollY > 200 && !scrolled) {
+        setScrolled(true);
+        gsap.to(logoRef.current, {
+          y: "-100%",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        gsap.to(centerRef.current, {
+          y: "-100%",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      } else if (scrollY <= 200 && scrolled) {
+        setScrolled(false);
+        gsap.to(logoRef.current, {
+          y: "0%",
+          duration: 0.25,
+          ease: "power2.out",
+        });
+        gsap.to(centerRef.current, {
+          y: "0%",
+          duration: 0.25,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled]);
+
   return (
-    <nav className="w-full h-24 md:h-36 fixed top-0 left-0 z-50 bg-background flex select-none">
+    <nav className="w-full h-24 md:h-36 fixed top-0 left-0 z-50 bg-transparent flex select-none">
       <div
         ref={logoRef}
-        className="w-[26%] h-full flex items-center justify-center border-border border-b border-r"
+        className="w-[26%] h-full flex items-center justify-center bg-background border-border border-b border-r"
       >
         <div className="h-20 flex items-center justify-center">
           <Image
@@ -98,10 +136,13 @@ export default function NavBar() {
           />
         </div>
       </div>
-      <div className="w-[48%] md:w-[62%] h-full flex items-center justify-center border-border border-b border-r" />
+      <div
+        ref={centerRef}
+        className="w-[48%] md:w-[62%] h-full flex items-center bg-background justify-center border-border border-b border-r"
+      />
       <div
         ref={menuRef}
-        className="w-[26%] md:w-[12%] h-full flex items-center justify-center border-border border-b cursor-pointer"
+        className="w-[26%] md:w-[12%] h-full flex items-center bg-background justify-center border-border border-b border-l cursor-pointer"
       >
         <MenuButton />
       </div>
