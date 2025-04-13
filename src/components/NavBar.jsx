@@ -1,36 +1,110 @@
+"use client";
+
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 import MenuButton from "./MenuButton";
 import Image from "next/image";
 import logo from "../../public/images/logo.svg";
 
 export default function NavBar() {
+  const logoRef = useRef(null);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const logoEl = logoRef.current;
+    const menuEl = menuRef.current;
+
+    const logoHover = () => {
+      gsap.to(logoEl, {
+        background: "var(--color-hover)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    };
+
+    const logoLeave = () => {
+      gsap.to(logoEl, {
+        background: "transparent",
+        duration: 0.4,
+        ease: "power2.out",
+      });
+    };
+
+    const menuHover = () => {
+      gsap.to(menuEl, {
+        background: "var(--color-hover)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+
+      gsap.to(menuEl.querySelectorAll(".cube-outer"), {
+        background: "var(--color-background)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+
+      gsap.to(menuEl.querySelectorAll(".cube-inner"), {
+        background: "var(--color-hover)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    };
+
+    const menuLeave = () => {
+      gsap.to(menuEl, {
+        background: "transparent",
+        duration: 0.4,
+        ease: "power2.out",
+      });
+
+      gsap.to(menuEl.querySelectorAll(".cube-outer"), {
+        background: "var(--color-stroke)",
+        duration: 0.4,
+        ease: "power2.out",
+      });
+
+      gsap.to(menuEl.querySelectorAll(".cube-inner"), {
+        background: "var(--color-background)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    };
+
+    logoEl?.addEventListener("mouseenter", logoHover);
+    logoEl?.addEventListener("mouseleave", logoLeave);
+    menuEl?.addEventListener("mouseenter", menuHover);
+    menuEl?.addEventListener("mouseleave", menuLeave);
+
+    return () => {
+      logoEl?.removeEventListener("mouseenter", logoHover);
+      logoEl?.removeEventListener("mouseleave", logoLeave);
+      menuEl?.removeEventListener("mouseenter", menuHover);
+      menuEl?.removeEventListener("mouseleave", menuLeave);
+    };
+  }, []);
+
   return (
-    <nav className="w-full fixed top-0 left-0 z-50 bg-transparent px-3 sm:px-12 py-3">
-      <div className="relative flex items-center justify-between max-w-[1440px] mx-auto h-[80px] sm:h-[100px]">
-        <MenuButton />
-
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    <nav className="w-full h-36 fixed top-0 left-0 z-50 bg-transparent flex select-none">
+      <div
+        ref={logoRef}
+        className="w-[26%] h-full flex items-center justify-center border-border border-b border-r"
+      >
+        <div className="h-20 flex items-center justify-center">
           <Image
-            src={logo}
             alt="Logo"
-            className="h-[60px] sm:h-[75px] object-contain cursor-pointer"
-          />
-        </div>
-
-        <div
-          className="relative text-foreground text-base sm:text-lg font-medium cursor-pointer"
-        >
-          <a href="/register" className="relative z-10">
-            Register
-          </a>
-          <span
-            className="absolute left-0 bottom-0 h-[2px] bg-foreground w-full opacity-0 scale-x-0"
+            src={logo}
+            className="w-auto h-full object-contain mix-blend-difference"
+            priority
           />
         </div>
       </div>
-
-      <div className="w-full max-w-[1440px] mx-auto mt-4">
-        <div className="h-px bg-accent opacity-20 w-full" />
+      <div className="w-[62%] h-full flex items-center justify-center border-border border-b border-r" />
+      <div
+        ref={menuRef}
+        className="w-[12%] h-full flex items-center justify-center border-border border-b cursor-pointer"
+      >
+        <MenuButton />
       </div>
     </nav>
   );
-};
+}

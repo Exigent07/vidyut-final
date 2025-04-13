@@ -1,30 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #0B0C11;
-  --foreground: #ffffff;
-  --accent: #C6D53F;
-  --hover: #DE6604;
-  --font-sans: 'Open Sans', sans-serif;
-  --font-mono: 'Courier New', monospace;
+  --background: #0d0d0d;
+  --surface-alt: #1a1a1a;
+  --surface-elevated: #2a2a2a;
+  --border: #333333;
+  --stroke: #3d3d3d;
+
+  --foreground: #f2f2f2;
+  --text-secondary: #b3b3b3;
+  --text-disabled: #666666;
+
+  --accent: #d3d3d3;
+  --hover: #e6e6e6;
+
+  --font-frontage-bold: 'Frontage Bold';
+  --font-frontage-regular: 'Frontage Regular';
+  --font-frontage-bulb: 'Frontage Bulb';
+  --font-sf: 'SF Pro';
+  --font-proxima: 'Proxima';
+}
+
+@font-face {
+  font-family: 'Frontage Bold';
+  src: url('/fonts/frontage-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Frontage Regular';
+  src: url('/fonts/frontage-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Frontage Bulb';
+  src: url('/fonts/frontage-bulb.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/sf-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/sf-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima';
+  src: url('/fonts/proxima.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface-alt: var(--surface-alt);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-stroke: var(--stroke);
+
   --color-foreground: var(--foreground);
-  --color-hover: var(--hover);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+
   --color-accent: var(--accent);
-  --font-sans: var(--font-sans); 
-  --font-mono: var(--font-mono); 
+  --color-hover: var(--hover);
+
+  --font-frontage-bold: var(--font-frontage-bold);
+  --font-frontage-regular: var(--font-frontage-regular);
+  --font-frontage-bulb: var(--font-frontage-bulb);
+  --font-sf: var(--font-sf);
+  --font-proxima: var(--font-proxima);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans); 
-}
-
-#no-scrollbar::-webkit-scrollbar {
-  display: none;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sf);
 }

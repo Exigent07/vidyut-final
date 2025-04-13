@@ -1,27 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { MapPin } from 'lucide-react';
-import { useEffect, useState } from "react";
+import { ClockFading, CalendarDays, ArrowUpRight, ExternalLink, Tickets, Shirt } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+import Cube from "@/models/Cube";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-const stats = [
-  { value: "20K", label: "Footfall" },
-  { value: "15Lakhs", label: "Worth Prizes" },
-  { value: "30+", label: "Competitions" },
-  { value: "20+", label: "Workshops" },
-];
-
-const StatItem = ({ value, label }) => (
-  <div className="flex items-center gap-3 group transition-all hover:scale-105 pointer-events-auto">
-    <span className="text-[32px] text-background group-hover:text-hover">
-      {value}
-    </span>
-    <div className="w-px h-8 bg-hover" />
-    <span className="text-base text-background group-hover:text-hover">
-      {label}
-    </span>
-  </div>
-);
 
 const Countdown = ({ targetDate }) => {
   const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--", seconds: "--" });
@@ -47,11 +31,11 @@ const Countdown = ({ targetDate }) => {
   }, [targetDate]);
 
   return (
-    <div className="flex gap-3">
+    <div className="flex justify-end items-center gap-7">
       {Object.entries(timeLeft).map(([label, value]) => (
-        <div key={label} className="w-[75px] h-[60px] flex flex-col items-center justify-center border border-foreground text-foreground transition-all hover:scale-110 hover:border-hover">
-          <span className="text-xl font-semibold">{value}</span>
-          <span className="text-xs uppercase">{label}</span>
+        <div key={label} className="flex flex-col items-center justify-center">
+          <span className="text-6xl font-sf">{value}</span>
+          <span className="text-lg uppercase font-frontage-regular">{label}</span>
         </div>
       ))}
     </div>
@@ -59,38 +43,103 @@ const Countdown = ({ targetDate }) => {
 };
 
 export default function HeroSection() {
-  return (
-    <section id="hero-section" className="relative flex items-center justify-center w-screen h-screen z-10 overflow-hidden pointer-events-none">
-      <div className="relative w-1/2 h-full flex flex-col items-center justify-center px-10">
-        <h1 className="text-9xl text-foreground tracking-[12px]">
-          VIDYUT
-        </h1>
+  const [cubeColor, setCubeColor] = useState("#f2f2f2");
+  const sectionRef = useRef(null);
 
-        <div className="text-2xl tracking-[12px] text-foreground mt-6">
-          NATIONAL LEVEL MULTIFEST
+  useGSAP(() => {
+    const boxes = gsap.utils.selector(sectionRef);
+  
+    boxes(".box").forEach((el) => {
+      const textElements = el.querySelectorAll("p, svg, span");
+    
+      el.addEventListener("mouseenter", () => {
+        gsap.to(el, { backgroundColor: "var(--color-hover)", duration: 0.4, ease: "power2.out" });
+        gsap.to(textElements, {
+          color: "var(--color-background)",
+          stroke: "var(--color-background)",
+          duration: 0.4,
+          ease: "power2.out",
+        });
+    
+        if (el.querySelector("canvas")) {
+          setCubeColor("#0d0d0d");
+        }
+      });
+    
+      el.addEventListener("mouseleave", () => {
+        gsap.to(el, { backgroundColor: "transparent", duration: 0.4, ease: "power2.out" });
+        gsap.to(textElements, {
+          color: "var(--color-foreground)",
+          stroke: "var(--color-foreground)",
+          duration: 0.4,
+          ease: "power2.out",
+        });
+    
+        if (el.querySelector("canvas")) {
+          setCubeColor("#f2f2f2");
+        }
+      });
+    });    
+  }, [cubeColor]);  
+
+  return (
+    <section ref={sectionRef} className="h-screen w-full select-none">
+      <div className="h-36 w-full" />
+      <div 
+        className="grid grid-cols-4 grid-rows-2 h-[calc(100%-9rem)] w-full relative"
+        style={{ gridTemplateColumns: "26% 26% auto 12%", gridTemplateRows: "70% auto" }}
+      >
+        <div className="box border-border border-r border-b flex items-center justify-center relative cursor-pointer">
+          <ClockFading className="w-20 h-20 stroke-[0.5px] text-foreground" />
+          <div className="flex items-end justify-between w-full absolute bottom-3 right px-6">
+            <p className="text-3xl font-frontage-regular">PAST VIDYUT'S</p>
+            <ArrowUpRight className="w-12 h-12 stroke-1 text-foreground" />
+          </div>
         </div>
         
-        <div className="h-[75px] px-4 py-2 mt-5 bg-foreground pointer-events-auto flex items-center justify-center text-background font-bold text-4xl tracking-widest cursor-pointer hover:bg-accent transition-all">
-            COMING SOON
+        <div className="box border-border border-r border-b flex items-center justify-center relative cursor-pointer">
+          <CalendarDays className="w-20 h-20 stroke-[0.5px] text-foreground" />
+          <div className="flex items-end justify-between w-full absolute bottom-3 right px-6">
+            <p className="text-3xl font-frontage-regular">VIEW EVENTS</p>
+            <ArrowUpRight className="w-12 h-12 stroke-1 text-foreground" />
+          </div>
+        </div>
+        
+        <div className="box border-border border-b border-r row-span-2 flex flex-col justify-between">
+          <p className="text-center h-[14%] flex items-center justify-center text-foreground text-7xl font-light border-border border-b">
+            VIDYUT
+          </p>
+          <div className="flex flex-col items-center justify-center flex-grow">
+            <Cube color={cubeColor} />
+          </div>
+          <div className="flex flex-col gap-12 px-12 py-6">
+            <p className="text-foreground text-6xl font-frontage-regular">
+              COMING
+              <br />
+              SOON
+            </p>
+            <div>
+              <Countdown targetDate={new Date([2025, 5, 23])} />
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-center mt-8 gap-4 pointer-events-auto">
-          <Countdown targetDate={new Date(2025, 3, 25, 0, 0, 0)} />
+        <div className="box flex items-center justify-center row-span-2 cursor-pointer">
+          <p className="uppercase -rotate-90 text-foreground font-frontage-bulb text-nowrap text-6xl">Register Now</p>
         </div>
-
-        <div className="flex items-center mt-8 ml-6">
-          <MapPin className="w-5 h-5 text-foreground" />
-          <span className="text-foreground text-sm ml-2">
-            Amritapuri Campus, Kollam, Kerala
-          </span>
+        
+        <div className="box border-border border-b border-r flex items-center justify-center relative w-full cursor-pointer">
+          <Tickets className="h-32 w-30 stroke-[0.25px]" />
+          <div className="absolute bottom-3 right-6">
+            <ExternalLink className="h-7 w-7 stroke-1 text-foreground" />
+          </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-0 w-full h-[66px] bg-foreground">
-        <div className="max-w-6xl mx-auto h-full flex justify-between items-center px-4 cursor-pointer">
-          {stats.map((stat, index) => (
-            <StatItem key={index} value={stat.value} label={stat.label} />
-          ))}
+        
+        <div className="box border-border border-b border-r flex items-center justify-center relative w-full cursor-pointer">
+          <Shirt className="h-32 w-30 stroke-[0.25px]" />
+          <div className="absolute bottom-3 right-6">
+            <ExternalLink className="h-7 w-7 stroke-1 text-foreground" />
+          </div>
         </div>
       </div>
     </section>
