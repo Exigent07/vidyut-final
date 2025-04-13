@@ -84,7 +84,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <nav className="w-full h-36 fixed top-0 left-0 z-50 bg-transparent flex select-none">
+    <nav className="w-full h-24 md:h-36 fixed top-0 left-0 z-50 bg-transparent flex select-none">
       <div
         ref={logoRef}
         className="w-[26%] h-full flex items-center justify-center border-border border-b border-r"
@@ -93,15 +93,15 @@ export default function NavBar() {
           <Image
             alt="Logo"
             src={logo}
-            className="w-auto h-full object-contain mix-blend-difference"
+            className="w-10 sm:w-14 md:w-auto h-full object-contain mix-blend-difference"
             priority
           />
         </div>
       </div>
-      <div className="w-[62%] h-full flex items-center justify-center border-border border-b border-r" />
+      <div className="w-[48%] md:w-[62%] h-full flex items-center justify-center border-border border-b border-r" />
       <div
         ref={menuRef}
-        className="w-[12%] h-full flex items-center justify-center border-border border-b cursor-pointer"
+        className="w-[26%] md:w-[12%] h-full flex items-center justify-center border-border border-b cursor-pointer"
       >
         <MenuButton />
       </div>

@@ -82,6 +82,8 @@
   --font-frontage-bulb: var(--font-frontage-bulb);
   --font-sf: var(--font-sf);
   --font-proxima: var(--font-proxima);
+
+  --breakpoint-xs: 30rem;
 }
 
 body {

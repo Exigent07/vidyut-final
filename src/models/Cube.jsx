@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-function RotatingCube({ mousePosition, color }) {
+function RotatingCube({ mousePosition, color, mobile }) {
   const meshRef = useRef();
   const materialRef = useRef();
   const lastMouseMoveRef = useRef(Date.now());
@@ -31,9 +31,11 @@ function RotatingCube({ mousePosition, color }) {
     }
   });
 
+  const cubeSize = mobile ? (mobile === "sm" ? 2 : 3) : 3.5;
+
   return (
     <mesh ref={meshRef}>
-      <boxGeometry args={[3.5, 3.5, 3.5]} />
+      <boxGeometry args={[cubeSize, cubeSize, cubeSize]} />
       <meshBasicMaterial ref={materialRef} wireframe />
     </mesh>
   );
@@ -41,7 +43,22 @@ function RotatingCube({ mousePosition, color }) {
 
 export default function Cube({ color = "#f2f2f2" }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mobile, setMobile] = useState(false);
   const mouseTimerRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setMobile(window.innerWidth < 768 ? (window.innerWidth < 640 ? "sm" : "md") : false);
+    }
+
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -64,11 +81,11 @@ export default function Cube({ color = "#f2f2f2" }) {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-52 h-52">
+      <div className="w-28 h-28 md:w-52 md:h-52">
         <Canvas>
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-          <RotatingCube mousePosition={mousePosition} color={color} />
+          <RotatingCube mousePosition={mousePosition} color={color} mobile={mobile} />
         </Canvas>
       </div>
     </div>
