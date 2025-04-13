@@ -144,15 +144,15 @@ export default function HeroSection() {
       </div>
 
       <div className="md:hidden w-full h-[calc(100%-6rem)] md:h-[calc(100%-9rem)] flex flex-col">
-        <div className="h-[14%] flex items-center justify-center w-full border-border border-b">
+        <div className="h-[14%] box flex items-center justify-center w-full border-border border-b">
           <h1 className="text-center text-foreground text-4xl xs:text-6xl font-proxima">VIDYUT</h1>
         </div>
-        <div className="h-[22%] border-b py-3 border-border flex flex-col justify-between relative">
+        <div className="h-[22%] box border-b py-3 border-border flex flex-col justify-between relative">
           <div className="flex items-center justify-between">
             <p className="text-foreground pl-3 xs:pl-6 py-1.5 xs:py-3 text-xl xs:text-4xl font-frontage-regular text-left">
               COMING <br /> SOON
             </p>
-            <span className="relative right-1/12 self-start mt xs;mt-4 xs:right-1/6 md:relative flex justify-center items-center h-12">
+            <span className="relative right-1/12 self-start mt-3 xs:mt-4 xs:right-1/6 md:relative flex justify-center items-center h-12">
               <Cube color={cubeColor} />
             </span>
           </div>
@@ -203,8 +203,8 @@ export default function HeroSection() {
           </div>
         </div>
         
-        <div className="h-[8%] flex justify-center items-center cursor-pointer">
-          <p className="text-foreground font-frontage-bulb text-2xl xs:text-4xl">REGISTER NOW</p>
+        <div className="box h-[8%] flex justify-center items-center cursor-pointer">
+          <p className="text-foreground pt-1 h-full w-full flex justify-center items-center font-frontage-bulb text-2xl xs:text-4xl">REGISTER NOW</p>
         </div>
       </div>
     </section>

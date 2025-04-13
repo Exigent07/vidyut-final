@@ -86,6 +86,10 @@
   --breakpoint-xs: 30rem;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
