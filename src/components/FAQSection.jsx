@@ -86,7 +86,7 @@ export default function FAQSection() {
               placeholder="Got something we didn't answer?"
               className="bg-transparent p-2 flex-grow h-16 text-2xl px-8 focus:outline-none text-muted-foreground"
             />
-            <button className="p-2 w-24 flex items-center justify-center border-border border-l h-full hover:bg-muted transition text-muted-foreground">
+            <button className="p-2 w-24 flex items-center justify-center border-border border-l h-full transition">
               <SendHorizontal />
             </button>
           </div>
