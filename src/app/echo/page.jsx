@@ -8,7 +8,6 @@ import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 
-// MDX components definition
 const mdxComponents = {
   h1: (props) => <h1 {...props} className="text-3xl font-bold my-4 text-primary" />,
   h2: (props) => <h2 {...props} className="text-2xl font-semibold my-3 text-primary" />,
