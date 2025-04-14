@@ -3,6 +3,7 @@
 import EventsSection from "@/components/EventsSection";
 import ExplainSection from "@/components/ExplainSection";
 import FAQSection from "@/components/FAQSection";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import NavBar from "@/components/NavBar";
 import PastSection from "@/components/PastSection";
@@ -16,6 +17,7 @@ export default function Home() {
       <EventsSection />
       <PastSection />
       <FAQSection />
+      <Footer />
     </main>
   );
 }

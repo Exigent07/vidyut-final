@@ -90,19 +90,14 @@ export default function NavBar() {
       if (window.innerWidth < 768) return;
 
       const scrollY = window.scrollY;
-      if (scrollY > 200 && !scrolled) {
-        setScrolled(true);
-        gsap.to(logoRef.current, {
-          y: "-100%",
-          duration: 0.5,
-          ease: "power2.out",
-        });
-        gsap.to(centerRef.current, {
-          y: "-100%",
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      } else if (scrollY <= 200 && scrolled) {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Check if user is near the bottom of the page (footer)
+      const isAtBottom = scrollY + windowHeight >= documentHeight - 100;
+      
+      // Show navbar if at top or at bottom (footer)
+      if ((scrollY <= 200 || isAtBottom) && scrolled) {
         setScrolled(false);
         gsap.to(logoRef.current, {
           y: "0%",
@@ -112,6 +107,20 @@ export default function NavBar() {
         gsap.to(centerRef.current, {
           y: "0%",
           duration: 0.25,
+          ease: "power2.out",
+        });
+      } 
+      // Hide navbar when scrolling through middle of page
+      else if (scrollY > 200 && !isAtBottom && !scrolled) {
+        setScrolled(true);
+        gsap.to(logoRef.current, {
+          y: "-100%",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        gsap.to(centerRef.current, {
+          y: "-100%",
+          duration: 0.5,
           ease: "power2.out",
         });
       }

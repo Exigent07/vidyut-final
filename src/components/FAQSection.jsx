@@ -59,7 +59,7 @@ export default function FAQSection() {
       className="h-screen overflow-x-hidden w-full select-none"
     >
       <div
-        className="grid h-screen w-full relative"
+        className="grid h-screen w-full relative border-border border-b"
         style={{
           gridTemplateColumns: "52% 36% 12%",
           gridTemplateRows: "25% 25% 25% 25%",
@@ -107,7 +107,7 @@ export default function FAQSection() {
           </div>
         </div>
 
-        <div className="box row-span-4 col-start-3 flex w-full h-full items-center justify-center cursor-pointer">
+        <div className="box row-span-4 col-start-3 flex w-full h-full items-center border-border justify-center cursor-pointer">
           <p className="uppercase h-full w-full flex items-center justify-center -rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             FAQ
           </p>
