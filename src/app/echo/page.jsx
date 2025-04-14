@@ -92,7 +92,7 @@ const MDXContent = ({ content }) => {
   );
 };
 
-export default function Echo() {
+function EchoContents() {
   const searchParams = useSearchParams();
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
@@ -190,13 +190,19 @@ export default function Echo() {
             {isProcessing ? (
               <LoadingIndicator />
             ) : (
-              <Suspense fallback={<LoadingIndicator />}>
                 <MDXContent content={response} />
-              </Suspense>
             )}
           </div>
         )}
       </div>
     </main>
+  );
+}
+
+export default function Echo() {
+  return (
+    <Suspense fallback={<LoadingIndicator />}>
+      <EchoContents />
+    </Suspense>
   );
 }
