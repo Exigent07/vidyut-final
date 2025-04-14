@@ -75,10 +75,10 @@ export default function FAQSection() {
           </div>
         ))}
 
-        <div className="row-start-1 col-start-2 border-border border-r border-t px-8 py-6 flex items-center justify-center box">
+        <div className="row-start-1 relative z-50 col-start-2 border-border border-r border-t px-8 py-6 flex items-center justify-center box">
           <h2 className="tracking-[0.2em] text-4xl font-sf uppercase">Have a question?</h2>
         </div>
-        <div className="row-start-2 col-start-2 border-border border-r border-t px-8 py-6 flex flex-col justify-center gap-2 box">
+        <div className="relative z-50 row-start-2 col-start-2 border-border border-r border-t px-8 py-6 flex flex-col justify-center gap-2 box">
           <h3 className="text-6xl font-bold font-sf">Ask Echo</h3>
           <div className="flex items-center border border-border mt-2">
             <input
@@ -91,13 +91,13 @@ export default function FAQSection() {
             </button>
           </div>
         </div>
-        <div className="box row-start-3 col-start-2 border-border border-r border-t flex items-center justify-center box">
+        <div className="box relative z-50 row-start-3 col-start-2 border-border border-r border-t flex items-center justify-center box">
           <Cube color={cubeColor} />
           <p className="absolute z-0 w-24 h-24 flex items-center justify-center text-4xl font-frontage-bold tracking-widest">
             OR
           </p>
         </div>
-        <div className="row-start-4 h-full col-start-2 border-border border-r border-t flex flex-col justify-between box">
+        <div className="row-start-4 relative z-50 h-full col-start-2 border-border border-r border-t flex flex-col justify-between box">
           <h3 className="h-[76%] w-full flex items-center justify-start pl-8 text-6xl font-bold font-sf">Reach out</h3>
           <div className="grid grid-cols-[1fr_1fr_1fr_1fr] h-[24%] w-full text-sm text-muted-foreground">
             <a className="text-md font-semibold font-frontage-bulb flex items-center justify-center border-border border-t border-r" target="_blank" href="https://www.instagram.com/vidyutmultifest">Instagram</a>

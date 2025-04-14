@@ -6,6 +6,7 @@ import Cube from "@/models/Cube";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import logo from "../../public/images/logo.svg";
+import Link from "next/link";
 
 export default function Footer() {
   const [cubeColor, setCubeColor] = useState("#f2f2f2");
@@ -114,18 +115,18 @@ export default function Footer() {
         
         <div className="row-start-1 relative z-50 col-start-3 border-border border-r border-t flex flex-col justify-between">
           <div className="nav-links h-full w-full grid grid-cols-1 grid-row-[1fr_1fr_1fr_1fr] gap-4">
-            <a href="#echo" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
+            <Link href="/echo" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
               <span>Ask Echo</span>
-            </a>
-            <a href="#events" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
+            </Link>
+            <Link href="#events" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
               <span>Events</span>
-            </a>
-            <a href="#theme" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
+            </Link>
+            <Link href="/theme" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
               <span>Theme</span>
-            </a>
-            <a href="#recap" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
+            </Link>
+            <Link href="/recap" className="text-7xl text-center flex h-full w-full items-center justify-center font-sf font-bold underline box">
               <span>Recap</span>
-            </a>
+            </Link>
           </div>
         </div>
         

@@ -42,7 +42,7 @@ export default function EventsSection() {
         className="grid grid-cols-2 grid-rows-2 h-screen w-full relative"
         style={{ gridTemplateColumns: "88% 12%", gridTemplateRows: "92% 8%"}}
       >
-        <div className="flex flex-col items-center justify-center relative border-border border-r">
+        <div className="flex flex-col items-center z-50 justify-center relative border-border border-r">
           <Carousel />
         </div>
 

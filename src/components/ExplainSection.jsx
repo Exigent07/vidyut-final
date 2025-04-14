@@ -46,7 +46,7 @@ export default function ExplainSection() {
           </p>
         </div>
 
-        <div className="box border-border border-b border-r md:row-span-2 flex items-center justify-center">
+        <div className="box border-border relative z-50 border-b border-r md:row-span-2 flex items-center justify-center">
           <p className="text-center text-4xl text-foreground font-frontage-bold px-48 xs:px-22">
             Vidyut, a national multi-fest by Amrita Vishwa Vidyapeetham, fosters creativity with its 2025 theme, Echos of the future
           </p>
