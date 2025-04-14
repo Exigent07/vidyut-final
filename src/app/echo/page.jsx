@@ -98,7 +98,7 @@ export default function Echo() {
 
         {submittedPrompt && (
           <>
-            <p className="bg-background border-border border text-2xl text-foreground p-4">{response || <Loader className="animate-spin" />}</p>
+            <p className="bg-background border-border flex items-center justify-center border text-2xl text-foreground p-4">{response || <Loader className="animate-spin" />}</p>
           </>
         )}
       </div>

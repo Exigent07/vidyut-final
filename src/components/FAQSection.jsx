@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Cube from "@/models/Cube";
 import { SendHorizontal } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const faqs = [
   { question: "What is Vidyut?", answer: "Vidyut is India's largest national-level inter-collegiate Multifest. It is a Three - Day event hosted at Amrita Vishwa Vidyapeetham, Amritapuri Campus, offering a wide range of workshops, competitions and cultural events" },
@@ -15,7 +16,9 @@ const faqs = [
 
 export default function FAQSection() {
   const [cubeColor, setCubeColor] = useState("#f2f2f2");
+  const [userPrompt, setUserPrompt] = useState("");
   const sectionRef = useRef(null);
+  const router = useRouter();
 
   useGSAP(() => {
     const boxes = gsap.utils.selector(sectionRef);
@@ -53,6 +56,14 @@ export default function FAQSection() {
     });    
   }, [cubeColor]); 
 
+  const handlePromptSubmit = (e) => {
+    e.preventDefault();
+    if (userPrompt.trim()) {
+      const encodedPrompt = encodeURIComponent(userPrompt);
+      router.push(`/echo?prompt=${encodedPrompt}`);
+    }
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -80,16 +91,21 @@ export default function FAQSection() {
         </div>
         <div className="relative z-50 row-start-2 col-start-2 border-border border-r border-t px-8 py-6 flex flex-col justify-center gap-2 box">
           <h3 className="text-6xl font-bold font-sf">Ask Echo</h3>
-          <div className="flex items-center border border-border mt-2">
+          <form onSubmit={handlePromptSubmit} className="flex items-center border border-border mt-2">
             <input
               type="text"
               placeholder="Got something we didn't answer?"
               className="bg-transparent p-2 flex-grow h-16 text-2xl px-8 focus:outline-none text-muted-foreground"
+              value={userPrompt}
+              onChange={(e) => setUserPrompt(e.target.value)}
             />
-            <button className="p-2 w-24 flex items-center justify-center border-border border-l h-full transition">
+            <button 
+              type="submit" 
+              className="p-2 w-24 flex items-center justify-center border-border border-l h-full transition hover:bg-foreground hover:text-background"
+            >
               <SendHorizontal />
             </button>
-          </div>
+          </form>
         </div>
         <div className="box relative z-50 row-start-3 col-start-2 border-border border-r border-t flex items-center justify-center box">
           <Cube color={cubeColor} />
