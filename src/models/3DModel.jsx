@@ -1,112 +1,116 @@
-import { useRef, useState, useEffect, Suspense } from 'react';
+import { useRef, useState, useEffect, Suspense, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import * as THREE from 'three';
 
-function RotatingModel({ mousePosition, color, mobile, modelPath }) {
-  const modelRef = useRef();
-  const lastMouseMoveRef = useRef(Date.now());
-  const isMouseActiveRef = useRef(false);
-  const { scene } = useGLTF(modelPath);
+useGLTF.preload('/models/car.glb');
+useGLTF.preload('/models/guitar.glb');
+
+function RotatingModel({ mouseDirection, color, mobile, modelPath }) {
+  const groupRef = useRef();
+  const clonedRef = useRef();
+  const { scene } = useGLTF(modelPath, true, undefined, (loader) => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/draco/');
+    loader.setDRACOLoader(dracoLoader);
+  });
 
   useEffect(() => {
     if (!scene) return;
 
-    const clonedScene = scene.clone();
+    const cacheKey = `${modelPath}_${color}_${mobile}`;
+    if (clonedRef.current?.key === cacheKey) return;
 
+    const clonedScene = scene.clone(true);
     clonedScene.traverse((child) => {
       if (child.isMesh) {
-        if (child.name === 'mesh_0') {
-          child.visible = false;
-        }
-    
-        if (
-          modelPath.includes('guitar') &&
-          child.geometry?.type === 'PlaneGeometry'
-        ) {
-          child.visible = false;
-        }
-    
         child.geometry = child.geometry.clone();
-    
-        child.material = new THREE.MeshBasicMaterial({
-          color: new THREE.Color(color),
-          wireframe: true,
-        });
+        child.material = mobile
+          ? new THREE.MeshNormalMaterial()
+          : new THREE.MeshBasicMaterial({
+              color: new THREE.Color(color),
+              wireframe: true,
+            });
       }
     });
-    
 
-    modelRef.current = clonedScene;
-  }, [scene, color, modelPath]);
+    clonedRef.current = { object: clonedScene, key: cacheKey };
+  }, [scene, color, modelPath, mobile]);
+
+  const scale = useMemo(() => {
+    if (modelPath.includes("guitar")) {
+      return mobile ? (mobile === "sm" ? 1.5 : 3) : 6;
+    }
+    return mobile ? (mobile === "sm" ? 1 : 1.5) : 1.7;
+  }, [modelPath, mobile]);
+
+  const position = useMemo(() => {
+    return modelPath.includes('guitar') ? [0, -1, 0] : [0, 0, 0];
+  }, [modelPath]);
 
   useFrame(() => {
-    if (modelRef.current) {
-      const now = Date.now();
-
-      if (mousePosition.x !== 0) {
-        lastMouseMoveRef.current = now;
-        isMouseActiveRef.current = true;
-        modelRef.current.rotation.y += mousePosition.x * 0.5;
-      } else if (now - lastMouseMoveRef.current > 100 || !isMouseActiveRef.current) {
-        modelRef.current.rotation.y +=  0.05;
-      }
-    }
-  });
-
-  let scale;
-  if (modelPath.includes("guitar")) {
-    scale = mobile ? (mobile === "sm" ? 1.5 : 2) : 6;
-  } else {
-    scale = mobile ? (mobile === "sm" ? 1 : 1.5) : 1.7;
-  }
+    if (!groupRef.current || !mouseDirection) return;
   
+    const { dx } = mouseDirection;
+    groupRef.current.rotation.y += dx * 1.5;
+  });  
 
-  return modelRef.current ? (
-    <primitive
-      object={modelRef.current}
-      scale={scale}
-      position={modelPath.includes('guitar') ? [0, -1, 0] : [0, 0, 0]}
-    />
-  ) : null;  
+  return clonedRef.current ? (
+    <group ref={groupRef} scale={scale} position={position}>
+      <primitive object={clonedRef.current.object} />
+    </group>
+  ) : null;
 }
 
 export default function ThreeDModel({ color = "#f2f2f2" }) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [mobile, setMobile] = useState(false);
   const [modelPath, setModelPath] = useState('/models/car.glb');
-  const mouseTimerRef = useRef(null);
+  const [mouseDirection, setMouseDirection] = useState({ dx: 0, dy: 0 });
 
   useEffect(() => {
     const checkMobile = () => {
       setMobile(window.innerWidth < 768 ? (window.innerWidth < 640 ? "sm" : "md") : false);
     };
-
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      setMousePosition({ x, y });
+    let lastX = null;
+    let lastY = null;
 
-      clearTimeout(mouseTimerRef.current);
-      mouseTimerRef.current = setTimeout(() => {
-        setMousePosition({ x: 0, y: 0 });
-      }, 100);
+    const handleMouseMove = (e) => {
+      if (mobile) return;
+
+      const x = e.clientX;
+      const y = e.clientY;
+
+      if (lastX !== null && lastY !== null) {
+        const dx = (x - lastX) / window.innerWidth;
+        const dy = (y - lastY) / window.innerHeight;
+        setMouseDirection({ dx, dy });
+      }
+
+      lastX = x;
+      lastY = y;
+    };
+
+    const handleMouseLeave = () => {
+      setMouseDirection({ dx: 0, dy: 0 });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(mouseTimerRef.current);
+      window.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [mobile]);
 
   const handleDoubleClick = () => {
+    if (mobile) return;
     setModelPath((prev) =>
       prev === '/models/car.glb' ? '/models/guitar.glb' : '/models/car.glb'
     );
@@ -114,13 +118,16 @@ export default function ThreeDModel({ color = "#f2f2f2" }) {
 
   return (
     <div className="flex justify-center w-full items-center require-pointer" require-text="2 Click">
-      <div className="w-full h-28 md:h-52" onDoubleClick={handleDoubleClick}>
+      <div
+        className="w-full h-28 md:h-52 touch-none"
+        onDoubleClick={handleDoubleClick}
+      >
         <Canvas style={{ width: "100%" }}>
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <Suspense fallback={null}>
             <RotatingModel
-              mousePosition={mousePosition}
+              mouseDirection={mouseDirection}
               color={color}
               mobile={mobile}
               modelPath={modelPath}

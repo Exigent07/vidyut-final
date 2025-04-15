@@ -109,9 +109,9 @@ export default function FAQSection() {
         </div>
         <div className="box relative z-50 row-start-3 col-start-2 border-border border-r border-t flex items-center justify-center box">
           <Cube color={cubeColor} />
-          <p className="absolute z-0 w-24 h-24 flex items-center justify-center text-4xl font-frontage-bold tracking-widest">
+          <h5 className="absolute z-40 w-24 h-24 flex items-center justify-center text-4xl font-frontage-bold tracking-widest mix-blend-difference">
             OR
-          </p>
+          </h5>
         </div>
         <div className="row-start-4 relative z-50 h-full col-start-2 border-border border-r border-t flex flex-col justify-between box">
           <h3 className="h-[76%] w-full flex items-center justify-start pl-8 text-6xl font-bold font-sf">Reach out</h3>
