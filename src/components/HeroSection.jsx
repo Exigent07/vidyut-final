@@ -153,7 +153,7 @@ export default function HeroSection() {
               COMING <br /> SOON
             </p>
             <span className="relative right-1/12 self-start mt-3 xs:mt-4 xs:right-1/6 md:relative flex justify-center items-center h-12">
-              <threeDModel color={threeDModelColor} />Click
+              <ThreeDModel color={threeDModelColor} />Click
             </span>
           </div>
           <div className="flex items-center justify-end pr-6">
