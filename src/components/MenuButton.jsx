@@ -84,7 +84,7 @@ export default function MenuButton() {
           <div
             key={i}
             ref={(el) => (squareRefs.current[i] = el)}
-            className="relative w-2 h-2 md:w-2.5 md:h-2.5 cursor-pointer"
+            className="relative w-2 h-2 md:w-2.5 md:h-2.5 require-pointer"
           >
             <div className="absolute inset-0 bg-stroke cube-outer rounded-[2px]" />
             <div className="absolute inset-[2px] bg-background cube-inner rounded-[1px]" />

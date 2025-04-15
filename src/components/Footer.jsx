@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Cube from "@/models/Cube";
+import Cube from "@/models/3DModel";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import logo from "../../public/images/logo.svg";
@@ -102,11 +102,11 @@ export default function Footer() {
           </div>
 
           <div className="h-[30%] w-full flex flex-col">
-            <div className="register-link h-1/2 border-border px-8 pb-2 border-t w-full flex items-end justify-between box cursor-pointer">
+            <div className="register-link h-1/2 border-border px-8 pb-2 border-t w-full flex items-end justify-between box require-pointer">
               <span className="text-4xl text-left font-proxima">Register</span>
               <ExternalLink className="text-3xl stroke-1 mb-2" />
             </div>
-            <div className="tickets-link h-1/2 border-border px-8 pb-2 border-t w-full flex items-end justify-between box cursor-pointer">
+            <div className="tickets-link h-1/2 border-border px-8 pb-2 border-t w-full flex items-end justify-between box require-pointer">
               <span className="text-4xl text-left font-proxima">Get Tickets</span>
               <ExternalLink className="text-3xl stroke-1 mb-2" />
             </div>
@@ -130,7 +130,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="box col-start-4 flex w-full h-full items-center justify-center cursor-pointer">
+        <div className="box col-start-4 flex w-full h-full items-center justify-center require-pointer">
           <p className="uppercase h-full w-full flex items-center justify-center -rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             See You Soon
           </p>

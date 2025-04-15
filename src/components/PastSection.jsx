@@ -94,7 +94,7 @@ export default function EventsSection() {
           />
         </div>
 
-        <div className="box flex items-center justify-center col-span-2 cursor-pointer">
+        <div className="box flex items-center justify-center col-span-2 require-pointer">
           <p className="uppercase text-xl sm:text-3xl md:text-4xl lg:text-5xl font-frontage-bulb text-center text-foreground px-12">
             View Past Events
           </p>

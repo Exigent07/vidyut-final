@@ -52,7 +52,7 @@ export default function ExplainSection() {
           </p>
         </div>
 
-        <div className="box flex w-full h-full md:h-[calc(100%-9rem)] border-border border-b md:border-none relative md:mt-36 items-center justify-center md:row-span-2 cursor-pointer">
+        <div className="box flex w-full h-full md:h-[calc(100%-9rem)] border-border border-b md:border-none relative md:mt-36 items-center justify-center md:row-span-2 require-pointer">
           <p className="uppercase h-full w-full flex items-center justify-center md:-rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             View Theme
           </p>

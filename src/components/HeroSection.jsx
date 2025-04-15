@@ -2,7 +2,7 @@
 
 import { ClockFading, CalendarDays, ArrowUpRight, ExternalLink, Tickets, Shirt } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
-import Cube from "@/models/Cube";
+import ThreeDModel from "@/models/3DModel";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -43,7 +43,7 @@ const Countdown = ({ targetDate }) => {
 };
 
 export default function HeroSection() {
-  const [cubeColor, setCubeColor] = useState("#f2f2f2");
+  const [threeDModelColor, setthreeDModelColor] = useState("#f2f2f2");
   const sectionRef = useRef(null);
 
   useGSAP(() => {
@@ -62,7 +62,7 @@ export default function HeroSection() {
         });
     
         if (el.querySelector("canvas")) {
-          setCubeColor("#0d0d0d");
+          setthreeDModelColor("#0d0d0d");
         }
       });
     
@@ -76,11 +76,11 @@ export default function HeroSection() {
         });
     
         if (el.querySelector("canvas")) {
-          setCubeColor("#f2f2f2");
+          setthreeDModelColor("#f2f2f2");
         }
       });
     });    
-  }, [cubeColor]);  
+  }, [threeDModelColor]);  
 
   return (
     <section ref={sectionRef} className="h-screen overflow-x-hidden w-full select-none">
@@ -89,7 +89,7 @@ export default function HeroSection() {
         className="hidden md:grid grid-cols-4 grid-rows-2 h-[calc(100%-6rem)] md:h-[calc(100%-9rem)] w-full relative"
         style={{ gridTemplateColumns: "26% 26% 36% 12%", gridTemplateRows: "70% 30%" }}
       >
-        <div className="box border-border border-r border-b flex items-center justify-center relative cursor-pointer">
+        <div require-nature="danger" require-text="Link" className="box border-border border-r border-b flex items-center justify-center relative require-pointer">
           <ClockFading className="w-16 h-16 xs:w-20 xs:h-20 stroke-[0.5px] text-foreground" />
           <div className="flex items-end justify-between w-full absolute bottom-3 right px-6">
             <p className="text-lg xs:text-xl lg:text-2xl 2xl:text-3xl font-frontage-regular">PAST VIDYUT'S</p>
@@ -97,7 +97,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="box border-border border-r border-b flex items-center justify-center relative cursor-pointer">
+        <div require-text="External" className="box border-border border-r border-b flex items-center justify-center relative require-pointer">
           <CalendarDays className="w-16 h-16 xs:w-20 xs:h-20 stroke-[0.5px] text-foreground" />
           <div className="flex items-end justify-between w-full absolute bottom-3 right px-6">
             <p className="text-lg xs:text-xl lg:text-2xl 2xl:text-3xl font-frontage-regular">VIEW EVENTS</p>
@@ -110,9 +110,9 @@ export default function HeroSection() {
             VIDYUT
           </p>
           <div className="flex flex-col items-center justify-center flex-grow">
-            <Cube color={cubeColor} />
+            <ThreeDModel color={threeDModelColor} />
           </div>
-          <div className="flex flex-col gap-10 xs:gap-12 px-6 xs:px-10 py-6">
+          <div className="flex flex-col gap-10 xs:gap-12 px-6 xs:px-10 py-6" require-text="Soon">
             <p className="text-3xl xs:text-4xl lg:text-5xl 2xl:text-6xl font-frontage-regular text-foreground">
               COMING
               <br />
@@ -122,20 +122,20 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="box flex items-center justify-center row-span-2 cursor-pointer">
+        <div require-text="Register" className="box flex items-center justify-center row-span-2 require-pointer">
           <p className="uppercase -rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             Register Now
           </p>
         </div>
 
-        <div className="box border-border border-b border-r flex items-center justify-center relative w-full cursor-pointer">
+        <div require-text="External" className="box border-border border-b border-r flex items-center justify-center relative w-full require-pointer">
           <Tickets className="h-20 w-20 xs:h-28 xs:w-28 lg:h-32 lg:w-32 stroke-[0.25px]" />
           <div className="absolute bottom-3 right-6">
             <ExternalLink className="h-5 w-5 xs:h-6 xs:w-6 lg:h-7 lg:w-7 stroke-1 text-foreground" />
           </div>
         </div>
 
-        <div className="box border-border border-b border-r flex items-center justify-center relative w-full cursor-pointer">
+        <div require-text="External" className="box border-border border-b border-r flex items-center justify-center relative w-full require-pointer">
           <Shirt className="h-20 w-20 xs:h-28 xs:w-28 lg:h-32 lg:w-32 stroke-[0.25px]" />
           <div className="absolute bottom-3 right-6">
             <ExternalLink className="h-5 w-5 xs:h-6 xs:w-6 lg:h-7 lg:w-7 stroke-1 text-foreground" />
@@ -153,7 +153,7 @@ export default function HeroSection() {
               COMING <br /> SOON
             </p>
             <span className="relative right-1/12 self-start mt-3 xs:mt-4 xs:right-1/6 md:relative flex justify-center items-center h-12">
-              <Cube color={cubeColor} />
+              <threeDModel color={threeDModelColor} />Click
             </span>
           </div>
           <div className="flex items-center justify-end pr-6">
@@ -162,7 +162,7 @@ export default function HeroSection() {
         </div>
         
         <div className="h-[28%] grid grid-cols-[66%_34%] border-b border-border">
-          <div className="h-full box border-r border-border px-2 sm:px-0 p-0 sm:p-8 flex flex-col items-center justify-between cursor-pointer">
+          <div className="h-full box border-r border-border px-2 sm:px-0 p-0 sm:p-8 flex flex-col items-center justify-between require-pointer">
             <div className="h-full flex items-center justify-center">
               <ClockFading className="h-12 w-12 relative top-1/6 sm:w-16 sm:h-16 stroke-[0.5px] text-foreground mb-6" />
             </div>
@@ -172,7 +172,7 @@ export default function HeroSection() {
             </div>
           </div>
           
-          <div className="h-full box p-0 sm:p-8 flex flex-col items-center justify-center cursor-pointer">
+          <div className="h-full box p-0 sm:p-8 flex flex-col items-center justify-center require-pointer">
             <div className="h-full flex items-center justify-center">
               <Tickets className="h-12 w-12 relative top-1/6 sm:w-16 sm:h-16 stroke-[0.5px] text-foreground mb-6" />
             </div>
@@ -183,7 +183,7 @@ export default function HeroSection() {
         </div>
         
         <div className="h-[28%] grid grid-cols-[66%_34%] border-b border-border">
-          <div className="h-full box border-r border-border px-2 sm:px-0 p-0 sm:p-8 flex flex-col items-center justify-center cursor-pointer">
+          <div className="h-full box border-r border-border px-2 sm:px-0 p-0 sm:p-8 flex flex-col items-center justify-center require-pointer">
             <div className="h-full flex items-center justify-center">
               <CalendarDays className="h-12 w-12 relative top-1/6 sm:w-16 sm:h-16 stroke-[0.5px] text-foreground mb-6" />
             </div>
@@ -193,7 +193,7 @@ export default function HeroSection() {
             </div>
           </div>
           
-          <div className="h-full box p-0 sm:p-8 flex flex-col items-center justify-center cursor-pointer">
+          <div className="h-full box p-0 sm:p-8 flex flex-col items-center justify-center require-pointer">
             <div className="h-full flex items-center justify-center">
               <Shirt className="h-12 w-12 relative top-1/6 sm:w-16 sm:h-16 stroke-[0.5px] text-foreground mb-6" />
             </div>
@@ -203,7 +203,7 @@ export default function HeroSection() {
           </div>
         </div>
         
-        <div className="box h-[8%] flex justify-center items-center cursor-pointer">
+        <div className="box h-[8%] flex justify-center items-center require-pointer">
           <p className="text-foreground pt-1 h-full w-full flex justify-center items-center font-frontage-bulb text-2xl xs:text-4xl">REGISTER NOW</p>
         </div>
       </div>

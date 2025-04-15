@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Cube from "@/models/Cube";
+import Cube from "@/models/3DModel";
 import { SendHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -123,7 +123,7 @@ export default function FAQSection() {
           </div>
         </div>
 
-        <div className="box row-span-4 col-start-3 flex w-full h-full items-center border-border justify-center cursor-pointer">
+        <div className="box row-span-4 col-start-3 flex w-full h-full items-center border-border justify-center require-pointer">
           <p className="uppercase h-full w-full flex items-center justify-center -rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             FAQ
           </p>

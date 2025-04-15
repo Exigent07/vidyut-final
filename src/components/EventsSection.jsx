@@ -46,7 +46,7 @@ export default function EventsSection() {
           <Carousel />
         </div>
 
-        <div className="box flex w-full h-[calc(100%-6rem)] md:h-[calc(100%-9rem)] relative mt-24 md:mt-36 items-center justify-center row-span-2 cursor-pointer">
+        <div className="box flex w-full h-[calc(100%-6rem)] md:h-[calc(100%-9rem)] relative mt-24 md:mt-36 items-center justify-center row-span-2 require-pointer">
           <p className="uppercase h-full w-full flex items-center justify-center -rotate-90 text-2xl xs:text-4xl lg:text-5xl 2xl:text-6xl text-foreground font-frontage-bulb whitespace-nowrap">
             View Events
           </p>

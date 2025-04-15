@@ -1,3 +1,4 @@
+import CustomPointer from "@/components/CustomPointer";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 
@@ -11,8 +12,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className="antialiased"
+        suppressHydrationWarning={true}
       > 
         <NavBar />
+        <CustomPointer />
         {children}
       </body>
     </html>

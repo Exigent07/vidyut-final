@@ -151,7 +151,7 @@ export default function NavBar() {
       />
       <div
         ref={menuRef}
-        className="w-[26%] md:w-[12%] h-full flex items-center bg-background justify-center border-border border-b border-l cursor-pointer"
+        className="w-[26%] md:w-[12%] h-full flex items-center bg-background justify-center border-border border-b border-l require-pointer"
       >
         <MenuButton />
       </div>
